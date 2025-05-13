@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../widgets/input_field.dart';
 import '../../../widgets/custom_button.dart';
+import '../registration/registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -368,7 +369,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(fontFamily: 'Manrope'),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => const RegistrationScreen(),
+                                  ),
+                                );
+                              },
                               child: Text(
                                 'Sign Up',
                                 style: TextStyle(
