@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: _emailController,
                           label: 'Email',
                           keyboardType: TextInputType.emailAddress,
-                          fillColor: theme.colorScheme.background,
+                          fillColor: theme.colorScheme.surface,
                         ),
                         const SizedBox(height: 16),
                         if (!_useOTP)
@@ -242,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: theme.colorScheme.background,
+                                  fillColor: theme.colorScheme.surface,
                                   suffixIcon: IconButton(
                                     icon: Icon(
                                       _showPassword
@@ -287,7 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   controller: _otpController,
                                   label: 'Enter OTP',
                                   keyboardType: TextInputType.number,
-                                  fillColor: theme.colorScheme.background,
+                                  fillColor: theme.colorScheme.surface,
                                 ),
                                 const SizedBox(height: 16),
                                 CustomButton(

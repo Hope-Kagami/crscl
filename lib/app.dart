@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'features/auth/login/login_screen.dart';
 import 'features/splash_screen.dart';
 import 'core/theme.dart';
 

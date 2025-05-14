@@ -1,16 +1,52 @@
-# crscl
+# CRSCL
 
-A new Flutter project.
+This is a Flutter application designed to provide a seamless user experience for managing various tasks.
+
+## Features
+
+- **Splash Screen**: The app starts with a splash screen that introduces the app.
+- **User Authentication**: Users can log in and manage their accounts.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter SDK installed on your machine.
+- An IDE such as Android Studio or Visual Studio Code.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Installation
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your_username/crscl.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd crscl
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   flutter pub get
+   ```
+
+### Running the App
+
+To run the app, use the following command:
+
+```bash
+flutter run
+```
+
+## Resources
+
+- [Flutter Documentation](https://docs.flutter.dev/)
+- [Flutter Cookbook](https://docs.flutter.dev/cookbook)
+
+## License
+
+This project is licensed under the MIT License.
