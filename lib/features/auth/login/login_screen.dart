@@ -60,7 +60,9 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           _message = 'Login successful!';
         });
-        // Navigate to home or main screen here
+        if (mounted) {
+          Navigator.of(context).pushReplacementNamed('/home');
+        }
       } else {
         setState(() {
           _message = 'Invalid OTP or login failed.';
@@ -91,7 +93,9 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           _message = 'Login successful!';
         });
-        // Navigate to home or main screen here
+        if (mounted) {
+          Navigator.of(context).pushReplacementNamed('/home');
+        }
       } else {
         setState(() {
           _message = 'Invalid credentials.';

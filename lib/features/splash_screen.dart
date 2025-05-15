@@ -69,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen>
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: _colorAnim.value!.withOpacity(0.3),
+                        color: _colorAnim.value!.withAlpha(76),
                         blurRadius: 24,
                         spreadRadius: 2,
                       ),

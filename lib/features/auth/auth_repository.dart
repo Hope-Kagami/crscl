@@ -75,11 +75,38 @@ class AuthRepository {
         profileImageUrl: profileImageUrl,
       );
 
-      _logger.info('User registration completed successfully');
+      _logger.info('User profile created/updated successfully');
       return authResponse;
     } catch (e, stackTrace) {
       _logger.severe('Registration failed: $e', e, stackTrace);
       throw Exception('Registration failed: ${e.toString()}');
+    }
+  }
+
+  /// Logs in a user using email and password.
+  ///
+  /// Throws an [Exception] if login fails.
+  Future<AuthResponse> signIn(String email, String password) async {
+    try {
+      _logger.info('Attempting to sign in user with email: $email');
+      final response = await _supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      if (response.user == null) {
+        _logger.severe('No user returned after sign in');
+        throw Exception('Sign in failed: No user returned');
+      }
+
+      _logger.info('User signed in successfully with ID: ${response.user!.id}');
+      return response;
+    } on AuthException catch (e) {
+      _logger.severe('AuthException: ${e.message}');
+      throw Exception('Sign in failed: ${e.message}');
+    } catch (e, stackTrace) {
+      _logger.severe('Sign in failed: $e', e, stackTrace);
+      throw Exception('Sign in failed: ${e.toString()}');
     }
   }
 
@@ -115,7 +142,10 @@ class AuthRepository {
     final authResponse = await _supabase.auth.signUp(
       email: email,
       password: password,
-      data: {'full_name': fullName, 'phone_number': phoneNumber},
+      data: {
+        'full_name': fullName,
+        'phone_number': phoneNumber,
+      },
     );
 
     if (authResponse.user == null) {
@@ -144,11 +174,9 @@ class AuthRepository {
             fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
           );
 
-      final profileImageUrl = _supabase.storage
-          .from('profiles')
-          .getPublicUrl(filePath);
-      _logger.fine('Profile image uploaded successfully: $profileImageUrl');
-      return profileImageUrl;
+      final imageResponse = _supabase.storage.from('profiles').getPublicUrl(filePath);
+      _logger.fine('Profile image uploaded successfully: $imageResponse');
+      return imageResponse;
     } catch (e, stackTrace) {
       _logger.warning('Failed to upload profile image: $e', e, stackTrace);
       return null; // Continue registration even if image upload fails
@@ -176,12 +204,11 @@ class AuthRepository {
 
     try {
       // Check if profile exists
-      final existingProfile =
-          await _supabase
-              .from('profiles')
-              .select()
-              .eq('id', userId)
-              .maybeSingle();
+      final existingProfile = await _supabase
+          .from('profiles')
+          .select()
+          .eq('id', userId)
+          .maybeSingle();
 
       if (existingProfile != null) {
         _logger.fine('Profile exists, updating profile for user: $userId');
