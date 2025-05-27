@@ -33,7 +33,11 @@ class _RepairCentersMapScreenState extends State<RepairCentersMapScreen> {
     if (!mounted) return;
     setState(() => _isLoading = true);
     try {
-      List<RepairCenter> repairCenters = await _repository.fetchRepairCenters();
+List<RepairCenter> repairCenters = await _repository.getServiceCenters(
+  latitude: _initialPosition.latitude,
+  longitude: _initialPosition.longitude,
+  radius: 10, // Assuming a default radius of 10 km
+);
       if (!mounted) return;
       setState(() {
         _markers.clear();

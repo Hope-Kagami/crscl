@@ -28,7 +28,7 @@ class RepairCentersSearchScreenState extends State<RepairCentersSearchScreen> {
       _isLoading = true;
     });
     try {
-      final results = await _repository.searchRepairCenters(query);
+final results = await _repository.searchServiceCenters(query);
       if (!mounted) return;
       setState(() {
         _searchResults = results;
