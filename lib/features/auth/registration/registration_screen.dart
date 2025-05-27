@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:io';
 import '../auth_repository.dart';
+import 'package:logger/logger.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -22,6 +23,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   File? _profileImage;
   bool _isLoading = false;
   bool _obscurePassword = true;
+  final Logger _logger = Logger();
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
@@ -79,11 +81,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     });
 
     try {
-      print('RegistrationScreen: Starting registration process...');
-      print('RegistrationScreen: Email: ${_emailController.text.trim()}');
-      print('RegistrationScreen: Name: ${_nameController.text.trim()}');
-      print('RegistrationScreen: Phone: ${_phoneController.text.trim()}');
-      print('RegistrationScreen: Has profile image: ${_profileImage != null}');
+      _logger.i('RegistrationScreen: Starting registration process...');
+      _logger.i('RegistrationScreen: Email: \\${_emailController.text.trim()}');
+      _logger.i('RegistrationScreen: Name: \\${_nameController.text.trim()}');
+      _logger.i('RegistrationScreen: Phone: \\${_phoneController.text.trim()}');
+      _logger.i(
+        'RegistrationScreen: Has profile image: \\${_profileImage != null}',
+      );
 
       final response = await _authRepository.registerUser(
         email: _emailController.text.trim(),
@@ -93,16 +97,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         profileImage: _profileImage,
       );
 
-      print('RegistrationScreen: Registration response received');
-      print(
-        'RegistrationScreen: User: ${response.user != null ? 'Created' : 'Not created'}',
+      _logger.i('RegistrationScreen: Registration response received');
+      _logger.i(
+        'RegistrationScreen: User: \\${response.user != null ? 'Created' : 'Not created'}',
       );
-      print(
-        'RegistrationScreen: Session: ${response.session != null ? 'Created' : 'Not created'}',
+      _logger.i(
+        'RegistrationScreen: Session: \\${response.session != null ? 'Created' : 'Not created'}',
       );
 
       if (response.user != null) {
-        print('RegistrationScreen: User ID: ${response.user!.id}');
+        _logger.i('RegistrationScreen: User ID: \\${response.user!.id}');
       }
 
       if (!mounted) return;
@@ -122,8 +126,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         Navigator.pop(context);
       }
     } catch (e, stackTrace) {
-      print('RegistrationScreen: Registration error: $e');
-      print('RegistrationScreen: Stack trace: $stackTrace');
+      _logger.e('RegistrationScreen: Registration error: \\$e');
+      _logger.e(
+        'RegistrationScreen: Stack trace:',
+        error: e,
+        stackTrace: stackTrace,
+      );
 
       if (!mounted) return;
 

@@ -31,8 +31,8 @@ class _SplashScreenState extends State<SplashScreen>
       end: 1.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
     _colorAnim = ColorTween(
-      begin: const Color(0xFFBEEE02),
-      end: const Color(0xFF62770F),
+      begin: const Color(0xFFFF6B8A),
+      end: const Color(0xFF4A90E2),
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
     _controller.forward();
     Future.delayed(const Duration(milliseconds: 2500), () {

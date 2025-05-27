@@ -56,13 +56,13 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text.trim(),
         token: _otpController.text.trim(),
       );
+      // Added navigation in both OTP and password login flows
       if (response.user != null) {
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, '/main');
         setState(() {
           _message = 'Login successful!';
         });
-        if (mounted) {
-          Navigator.of(context).pushReplacementNamed('/home');
-        }
       } else {
         setState(() {
           _message = 'Invalid OTP or login failed.';
@@ -90,12 +90,11 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _passwordController.text.trim(),
       );
       if (response.user != null) {
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, '/main');
         setState(() {
           _message = 'Login successful!';
         });
-        if (mounted) {
-          Navigator.of(context).pushReplacementNamed('/home');
-        }
       } else {
         setState(() {
           _message = 'Invalid credentials.';

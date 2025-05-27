@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:logging/logging.dart';
 
@@ -12,8 +13,8 @@ class AuthRepository {
     // Configure logger to output debug info in development
     Logger.root.level = Level.INFO;
     Logger.root.onRecord.listen((record) {
-      // In production, this could be sent to a logging service
-      print('${record.level.name}: ${record.time}: ${record.message}');
+      // In production, this would be sent to a logging service
+      debugPrint('${record.level.name}: ${record.time}: ${record.message}');
     });
   }
 
@@ -142,10 +143,7 @@ class AuthRepository {
     final authResponse = await _supabase.auth.signUp(
       email: email,
       password: password,
-      data: {
-        'full_name': fullName,
-        'phone_number': phoneNumber,
-      },
+      data: {'full_name': fullName, 'phone_number': phoneNumber},
     );
 
     if (authResponse.user == null) {
@@ -174,7 +172,9 @@ class AuthRepository {
             fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
           );
 
-      final imageResponse = _supabase.storage.from('profiles').getPublicUrl(filePath);
+      final imageResponse = _supabase.storage
+          .from('profiles')
+          .getPublicUrl(filePath);
       _logger.fine('Profile image uploaded successfully: $imageResponse');
       return imageResponse;
     } catch (e, stackTrace) {
@@ -204,11 +204,12 @@ class AuthRepository {
 
     try {
       // Check if profile exists
-      final existingProfile = await _supabase
-          .from('profiles')
-          .select()
-          .eq('id', userId)
-          .maybeSingle();
+      final existingProfile =
+          await _supabase
+              .from('profiles')
+              .select()
+              .eq('id', userId)
+              .maybeSingle();
 
       if (existingProfile != null) {
         _logger.fine('Profile exists, updating profile for user: $userId');

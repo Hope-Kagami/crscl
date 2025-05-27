@@ -5,7 +5,8 @@ class ReviewRepository {
 
   ReviewRepository() : _supabase = Supabase.instance.client;
 
-  Future<void> submitReview({
+  Future<void> 
+  submitReview({
     required String repairCenterId,
     required String userId,
     required int rating,

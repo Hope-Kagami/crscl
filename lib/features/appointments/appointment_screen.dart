@@ -9,10 +9,10 @@ class AppointmentScreen extends StatefulWidget {
   const AppointmentScreen({super.key, required this.repairCenter});
 
   @override
-  _AppointmentScreenState createState() => _AppointmentScreenState();
+  State<AppointmentScreen> createState() => AppointmentScreenState();
 }
 
-class _AppointmentScreenState extends State<AppointmentScreen> {
+class AppointmentScreenState extends State<AppointmentScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
@@ -47,8 +47,11 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
   void _submitAppointment() async {
     final userId = Supabase.instance.client.auth.currentUser?.id;
     if (userId == null) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('You must be logged in to make an appointment')),
+        const SnackBar(
+          content: Text('You must be logged in to make an appointment'),
+        ),
       );
       return;
     }
@@ -68,11 +71,13 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         dateTime: combinedDateTime,
         description: _descriptionController.text,
       );
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Appointment created successfully')),
       );
       Navigator.of(context).pop();
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to create appointment: $e')),
       );
@@ -82,9 +87,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Book an Appointment'),
-      ),
+      appBar: AppBar(title: const Text('Book an Appointment')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -99,7 +102,9 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () => _selectDate(context),
-                    child: Text('Date: ${_selectedDate.toLocal().toString().split(' ')[0]}'),
+                    child: Text(
+                      'Date: ${_selectedDate.toLocal().toString().split(' ')[0]}',
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16.0),

@@ -7,7 +7,7 @@ class RepairCentersMapScreen extends StatefulWidget {
   const RepairCentersMapScreen({super.key});
 
   @override
-  _RepairCentersMapScreenState createState() => _RepairCentersMapScreenState();
+  State<RepairCentersMapScreen> createState() => _RepairCentersMapScreenState();
 }
 
 class _RepairCentersMapScreenState extends State<RepairCentersMapScreen> {
