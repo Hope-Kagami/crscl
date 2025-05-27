@@ -5,16 +5,16 @@ import 'features/auth/signup_screen.dart';
 import 'features/auth/forgot_password_screen.dart';
 import 'features/home/home_screen.dart';
 import 'features/profile/profile_screen.dart';
-import 'features/appointments/booking_screen.dart';
-import 'features/appointments/booking_success_screen.dart';
-import 'features/appointments/booking_failure_screen.dart';
-import 'features/appointments/booking_history_screen.dart';
+import 'features/appointments/appointment_screen.dart';
+import 'features/appointments/appointments_screen.dart';
+import 'features/repair_centers/models/repair_center.dart';
 import 'features/repair_centers/service_center_details_screen.dart';
 import 'features/chat/chat_list_screen.dart';
 import 'features/chat/chat_interface_screen.dart';
 import 'features/reviews/leave_review_screen.dart';
 import 'features/reviews/all_reviews_screen.dart';
-import 'core/theme.dart';
+import 'features/auth/reset_password_screen.dart';
+import 'core/theme/app_theme.dart';
 
 class CRSCLApp extends StatelessWidget {
   const CRSCLApp({super.key});
@@ -23,7 +23,7 @@ class CRSCLApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CRSCL',
-      theme: appTheme,
+      theme: AppTheme.lightTheme,
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
@@ -32,16 +32,19 @@ class CRSCLApp extends StatelessWidget {
         '/forgot-password': (context) => const ForgotPasswordScreen(),
         '/main': (context) => const HomeScreen(),
         '/profile': (context) => const ProfileScreen(),
-        '/booking': (context) => const BookingScreen(),
-        '/booking-success': (context) => const BookingSuccessScreen(),
-        '/booking-failure': (context) => const BookingFailureScreen(),
-        '/booking-history': (context) => const BookingHistoryScreen(),
+        '/booking': (context) {
+          final repairCenter =
+              ModalRoute.of(context)!.settings.arguments as RepairCenter;
+          return AppointmentScreen(repairCenter: repairCenter);
+        },
+        '/appointments': (context) => const AppointmentsScreen(),
         '/service-center-details':
             (context) => const ServiceCenterDetailsScreen(),
         '/chat-list': (context) => const ChatListScreen(),
         '/chat': (context) => const ChatInterfaceScreen(),
         '/leave-review': (context) => const LeaveReviewScreen(),
         '/all-reviews': (context) => const AllReviewsScreen(),
+        '/reset-password': (context) => const ResetPasswordScreen(),
       },
     );
   }
